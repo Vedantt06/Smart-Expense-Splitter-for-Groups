@@ -22,7 +22,9 @@
             <h2>Add New Expense</h2>
             <p>Record a new expense and easily split the cost.</p>
 
-            <form action="dashboard.php" method="GET">
+        
+            <form id="expenseForm">
+
                 <div class="form-group">
                     <label for="description">What was this for?</label>
                     <input type="text" id="description" name="description" placeholder="E.g. Dinner, Taxi, Tickets" required>
@@ -49,28 +51,42 @@
                 <div class="form-group" style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color);">
                     <label style="margin-bottom: 1rem;">Split Between</label>
                     <div class="checkbox-list">
+
+
                         <label class="checkbox-item">
-                            <input type="checkbox" name="split[]" value="you" checked> You
+                            <input type="checkbox" class="split-user" value="you" checked> You
                         </label>
+
                         <label class="checkbox-item">
-                            <input type="checkbox" name="split[]" value="alice" checked> Alice
+                            <input type="checkbox" class="split-user" value="alice" checked> Alice
                         </label>
+
                         <label class="checkbox-item">
-                            <input type="checkbox" name="split[]" value="bob" checked> Bob
+                            <input type="checkbox" class="split-user" value="bob" checked> Bob
                         </label>
+
                         <label class="checkbox-item">
-                            <input type="checkbox" name="split[]" value="charlie" checked> Charlie
+                            <input type="checkbox" class="split-user" value="charlie" checked> Charlie
                         </label>
+
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                     <a href="dashboard.php" class="btn btn-outline" style="flex: 1;">Cancel</a>
-                    <button type="submit" class="btn btn-primary" style="flex: 2;">Save Expense</button>
+
+                    <button type="button" id="addExpenseBtn" class="btn btn-primary" style="flex: 2;">
+                        Save Expense
+                    </button>
                 </div>
+
             </form>
         </div>
     </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>
