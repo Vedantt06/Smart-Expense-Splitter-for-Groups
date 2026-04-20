@@ -1,5 +1,4 @@
 <?php
-<?php
 
 header('Content-Type: application/json');
 
@@ -64,22 +63,8 @@ function settleBalances($balances) {
 }
 
 
-// ================== TEMP TEST ==================
 
-$users = ["A", "B", "C"];
 
-$expenses = [
-    [
-        "paid_by" => "A",
-        "amount" => 900,
-        "split_between" => ["A", "B", "C"]
-    ]
-];
 
-$result = settleBalances(calculateBalances($users, $expenses));
-
-echo json_encode($result);
-
-?>
 
 ?>
