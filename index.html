@@ -1,0 +1,193 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Splitter</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Auth Section (Login) -->
+    <div id="login-section" class="section active">
+        <header>
+            <h1>Splitify</h1>
+            <p>Smart Expense Splitter</p>
+        </header>
+        <div style="padding: 30px 20px;">
+            <h2 style="margin-bottom: 20px; text-align: center;">Welcome Back!</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="login-username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <div class="auth-switch">
+                Don't have an account? <a href="#" onclick="showSection('register-section')">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Section (Register) -->
+    <div id="register-section" class="section">
+        <header>
+            <h1>Splitify</h1>
+            <p>Create an Account</p>
+        </header>
+        <div style="padding: 30px 20px;">
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="reg-username" class="form-control" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" class="form-control" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <div class="auth-switch">
+                Already have an account? <a href="#" onclick="showSection('login-section')">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="section">
+        <header>
+            <h1>My Groups</h1>
+            <p id="welcome-msg">Welcome</p>
+            <a href="#" onclick="logout()" style="position:absolute; right:20px; top:30px; color:#fff;"><i class="fas fa-sign-out-alt"></i></a>
+        </header>
+        <div style="padding: 20px;">
+            <!-- Public API Quote Requirement -->
+            <div id="quote-container">
+                <i class="fas fa-quote-left"></i> <span id="daily-quote">Loading quote...</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3>Your Trips & Groups</h3>
+                <button onclick="showSection('create-group-section')" class="btn btn-primary" style="width: auto; padding: 8px 15px; font-size: 14px;">+ New</button>
+            </div>
+            
+            <div id="groups-list" class="list-group">
+                <!-- Groups injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Group Section -->
+    <div id="create-group-section" class="section">
+        <header>
+            <a href="#" onclick="showSection('dashboard-section')" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>New Group</h1>
+        </header>
+        <div style="padding: 30px 20px;">
+            <form id="create-group-form">
+                <div class="form-group">
+                    <label>Group Name (e.g., Europe Trip)</label>
+                    <input type="text" id="new-group-name" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Group</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Group Details Section -->
+    <div id="group-details-section" class="section">
+        <header>
+            <a href="#" onclick="showSection('dashboard-section')" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1 id="detail-group-name">Group Name</h1>
+            <button onclick="showSection('add-member-section')" class="btn btn-outline" style="margin-top: 10px; border-color: #fff; color: #fff; padding: 5px 10px; font-size: 12px; display: inline-block; width: auto;"><i class="fas fa-user-plus"></i> Add Member</button>
+        </header>
+        
+        <div style="padding: 20px;">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('expenses')">Expenses</div>
+                <div class="tab" onclick="switchTab('balances')">Balances</div>
+            </div>
+
+            <!-- Expenses Tab -->
+            <div id="tab-expenses" class="tab-content active">
+                <button onclick="showSection('add-expense-section')" class="btn btn-primary" style="margin-bottom: 15px;">+ Add Expense</button>
+                <div id="expenses-list">
+                    <!-- Expenses injected here -->
+                </div>
+            </div>
+
+            <!-- Balances Tab -->
+            <div id="tab-balances" class="tab-content">
+                <h3 style="margin-bottom: 10px;">Net Balances</h3>
+                <div id="balances-list" style="margin-bottom: 20px;">
+                    <!-- Balances injected here -->
+                </div>
+                
+                <h3 style="margin-bottom: 10px;">How to Settle Up</h3>
+                <div id="settlements-list">
+                    <!-- Settlements injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Member Section -->
+    <div id="add-member-section" class="section">
+        <header>
+            <a href="#" onclick="showSection('group-details-section')" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Add Member</h1>
+        </header>
+        <div style="padding: 30px 20px;">
+            <div class="form-group">
+                <label>Search Username</label>
+                <input type="text" id="search-user" class="form-control" placeholder="Type username...">
+            </div>
+            <div id="search-results" class="list-group">
+                <!-- Search results -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Expense Section -->
+    <div id="add-expense-section" class="section">
+        <header>
+            <a href="#" onclick="showSection('group-details-section')" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1>Add Expense</h1>
+        </header>
+        <div style="padding: 30px 20px;">
+            <form id="add-expense-form">
+                <div class="form-group">
+                    <label>Description (e.g., Dinner)</label>
+                    <input type="text" id="exp-desc" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount ($)</label>
+                    <input type="number" id="exp-amount" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Split between (Select members):</label>
+                    <div id="split-members-list">
+                        <!-- Checkboxes for members -->
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Expense</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery (Required for effects/ajax as per project constraints) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
