@@ -1,4 +1,4 @@
-# Smart Expense Splitter (Splitify)
+# Smart Expense Splitter (SplitSmart)
 
 Smart Expense Splitter is a web application designed to help groups, roommates, and travel companions accurately track shared expenses and simplify the process of settling debts. The platform eliminates the need for manual calculations by automatically determining net balances and providing optimized settlement plans.
 
